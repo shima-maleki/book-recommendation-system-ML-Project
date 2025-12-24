@@ -18,29 +18,31 @@ This project intentionally focuses on:
 
 ### High-Level Data + Service Flow (Mermaid)
 
-
-```mermaid
-flowchart TD
-  A[Raw CSVs (data)] --> B[Ingestion Pipeline]
-  B --> C[Clean CSVs (artifacts)]
-  C --> D[Preprocessing Pipeline]
-
-  D --> E[ratings.pkl]
-  D --> F[book_pivot.pkl]
-  D --> G[books_title.pkl]
-
-  E --> H[Training Pipeline]
-  F --> H
-  G --> H
-
-  H --> I[model.pkl]
-
-  I --> J[Prediction Pipeline]
-  F --> J
-  G --> J
-
-  J --> K[FastAPI (/recommend)]
-  K --> L[Streamlit UI]
+```
+          Raw CSVs (Data/)
+                 |
+          [Ingestion Pipeline]
+                 |
+          Clean CSVs (artifacts/)
+                 |
+          [Preprocessing Pipeline]
+                 |
+      ratings.pkl | book_pivot.pkl | books_title.pkl
+                 |
+          [Training Pipeline]
+                 |
+              model.pkl
+                 |
+    ┌─────────────────────────────┐
+    │      Prediction Pipeline    │
+    │ (loads model + pivot + meta)│
+    └─────────────┬───────────────┘
+                  |
+          ┌───────┴────────┐
+          │                │
+   FastAPI (/recommend)    │
+          │                │
+          └───────► Streamlit UI
 ```
 
 ---
