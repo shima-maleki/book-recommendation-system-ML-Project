@@ -139,8 +139,8 @@ API / Dashboard (Phase 2)
 | Similarity Metrics   | Cosine Similarity, Pearson Correlation |
 | Evaluation           | RMSE, MAE, Precision@K, Recall@K       |
 | Visualization        | Matplotlib, Seaborn                    |
-| API (Planned)        | FastAPI                                |
-| Deployment (Planned) | Docker                                 |
+| API        | FastAPI                                |
+| Deployment  | Docker                                 |
 
 ---
 
@@ -176,10 +176,7 @@ API / Dashboard (Phase 2)
 ### Phase 6: Recommendation Engine
 ---
 
-### Phase 7: Productionization (Planned – Level 2)
----
-
-### Phase 8: Visualization & Dashboard (Optional)
+### Phase 7: Productionization
 
 ---
 
