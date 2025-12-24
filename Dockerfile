@@ -25,6 +25,7 @@ COPY src ./src
 COPY Data ./Data
 COPY artifacts ./artifacts
 COPY notebooks ./notebooks
+COPY app.py streamlit_app.py ./
 COPY README.md .
 
 # Activate project venv for all commands

@@ -28,6 +28,8 @@ def recommend(payload: RecommendationRequest) -> RecommendationResponse:
         raise HTTPException(status_code=400, detail="Book title must be provided.")
     try:
         recs, posters = prediction_pipeline.recommend_book(payload.book)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
     except Exception as exc:  # broad to surface errors cleanly
         raise HTTPException(
             status_code=500,

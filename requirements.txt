@@ -17,6 +17,8 @@ scipy>=1.5.2
 streamlit
 
 FastAPI
+uvicorn
+requests
 
 # Other libraries as needed by project
 # For example, if you are not using colab

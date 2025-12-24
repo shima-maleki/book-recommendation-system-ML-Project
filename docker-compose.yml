@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  data:
+    build: .
+    command: ["uv", "run", "python", "-m", "src.pipelines.data_pipeline"]
+    environment:
+      - ARTIFACT_DIR=/app/artifacts
+    volumes:
+      - artifacts:/app/artifacts
+      - ./Data:/app/Data:ro
+    restart: "no"
+
+  train:
+    build: .
+    command: ["uv", "run", "python", "-m", "src.pipelines.training_pipeline"]
+    environment:
+      - ARTIFACT_DIR=/app/artifacts
+    volumes:
+      - artifacts:/app/artifacts
+      - ./Data:/app/Data:ro
+    restart: "no"
+
+  predict:
+    build: .
+    command: ["uv", "run", "python", "-m", "src.pipelines.prediction_pipeline", "--book", "A Bend in the Road"]
+    environment:
+      - ARTIFACT_DIR=/app/artifacts
+    depends_on:
+      train:
+        condition: service_completed_successfully
+
+  api:
+    build: .
+    command: ["uv", "run", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      - ARTIFACT_DIR=/app/artifacts
+    depends_on:
+      train:
+        condition: service_completed_successfully
+    volumes:
+      - artifacts:/app/artifacts
+    ports:
+      - "18000:8000"
+    restart: "no"
+
+  ui:
+    build: .
+    command: ["uv", "run", "streamlit", "run", "streamlit_app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+    environment:
+      - API_URL=http://api:8000/recommend
+    depends_on:
+      - api
+    ports:
+      - "18001:8501"
+    restart: "no"
+    volumes:
+      - artifacts:/app/artifacts
+    restart: "no"
+
+volumes:
+  artifacts:
