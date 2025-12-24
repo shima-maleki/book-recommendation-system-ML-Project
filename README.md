@@ -259,9 +259,9 @@ pip install -r requirements.txt
 
 ## 👤 Author
 
-**Your Name**
-Machine Learning Engineer / Applied Machine Learning
-LinkedIn | GitHub
+**Shima Maleki**
+Machine Learning Engineer / Applied Machine Learning  
+GitHub: https://github.com/shima-maleki
 
 ---
 
