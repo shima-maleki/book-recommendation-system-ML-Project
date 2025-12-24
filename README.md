@@ -16,6 +16,35 @@ This project intentionally focuses on:
 * Transparent progress tracking
 * Explicit demonstration of technical skills
 
+### High-Level Data + Service Flow
+```
+          Raw CSVs (Data/)
+                 |
+          [Ingestion Pipeline]
+                 |
+          Clean CSVs (artifacts/)
+                 |
+          [Preprocessing Pipeline]
+                 |
+      ratings.pkl | book_pivot.pkl | books_title.pkl
+                 |
+          [Training Pipeline]
+                 |
+              model.pkl
+                 |
+    ┌─────────────────────────────┐
+    │      Prediction Pipeline    │
+    │ (loads model + pivot + meta)│
+    └─────────────┬───────────────┘
+                  |
+          ┌───────┴────────┐
+          │                │
+   FastAPI (/recommend)    │
+          │                │
+          └───────► Streamlit UI
+```
+
+
 ---
 
 ## 🎯 Problem Statement
