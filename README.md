@@ -310,3 +310,35 @@ LinkedIn | GitHub
 ## ⭐ Project Status
 
 🚧 **Actively in Development — progress tracked in this README**
+
+---
+
+## ⚡ Quick Start (Docker + uv)
+
+Prereqs: Docker + Docker Compose.
+
+1) Build images  
+`docker compose build`
+
+2) Generate artifacts (ingestion → preprocessing → training)  
+`docker compose run --rm train`
+   - Artifacts land in a named volume mounted at `/app/artifacts`.
+
+3) Run API and UI  
+`docker compose up api ui`
+   - API: http://localhost:18000 (health at `/health`, recommend at `/recommend`)  
+   - UI:  http://localhost:18001 (talks to the API automatically)
+
+4) Call the API directly  
+`curl -X POST http://localhost:18000/recommend -H "Content-Type: application/json" -d '{"book": "A Bend in the Road"}'`
+
+5) Query via CLI (inside repo, using existing artifacts)  
+`python -m src.pipelines.prediction_pipeline --book "A Bend in the Road"`
+
+6) Clean up containers/volumes  
+`docker compose down`  
+`docker volume rm book-recommendation-system-ml-project_artifacts` (only if you want to drop saved artifacts)
+
+Notes:
+- The Streamlit UI defaults to the mapped API endpoint; override with `API_URL` if the API runs elsewhere.
+- If a title isn’t in the pivot (filtered catalog), the API returns 404 with a clear message.
