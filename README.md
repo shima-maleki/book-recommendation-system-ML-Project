@@ -16,47 +16,32 @@ This project intentionally focuses on:
 * Transparent progress tracking
 * Explicit demonstration of technical skills
 
-### High-Level Data + Service Flow
+### High-Level Data + Service Flow (Mermaid)
+
+
+```mermaid
+flowchart TD
+  A[Raw CSVs (data)] --> B[Ingestion Pipeline]
+  B --> C[Clean CSVs (artifacts)]
+  C --> D[Preprocessing Pipeline]
+
+  D --> E[ratings.pkl]
+  D --> F[book_pivot.pkl]
+  D --> G[books_title.pkl]
+
+  E --> H[Training Pipeline]
+  F --> H
+  G --> H
+
+  H --> I[model.pkl]
+
+  I --> J[Prediction Pipeline]
+  F --> J
+  G --> J
+
+  J --> K[FastAPI (/recommend)]
+  K --> L[Streamlit UI]
 ```
-          Raw CSVs (Data/)
-                 |
-          [Ingestion Pipeline]
-                 |
-          Clean CSVs (artifacts/)
-                 |
-          [Preprocessing Pipeline]
-                 |
-      ratings.pkl | book_pivot.pkl | books_title.pkl
-                 |
-          [Training Pipeline]
-                 |
-              model.pkl
-                 |
-    ┌─────────────────────────────┐
-    │      Prediction Pipeline    │
-    │ (loads model + pivot + meta)│
-    └─────────────┬───────────────┘
-                  |
-          ┌───────┴────────┐
-          │                │
-   FastAPI (/recommend)    │
-          │                │
-          └───────► Streamlit UI
-```
-
-
----
-
-## 🎯 Problem Statement
-
-Given historical user–book rating interactions, predict which books a user is most likely to enjoy next.
-
-Key challenges addressed:
-
-* Highly sparse user–item interaction data
-* Cold-start users and books
-* Similarity computation at scale
-* Meaningful evaluation beyond simple accuracy metrics
 
 ---
 
