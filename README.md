@@ -269,7 +269,7 @@ pip install -r requirements.txt
 * Designed for sparse, real-world user interaction data
 * Evaluated recommendations using both accuracy and ranking metrics
 * Structured the project for scalability and production deployment
-* Demonstrated ML engineering decision-making
+* Demonstrated ML engineering decision-making practices
 
 ---
 
