@@ -159,80 +159,27 @@ API / Dashboard (Phase 2)
 ## 📌 Project Progress Tracker
 
 ### Phase 1: Foundation & Data
-
-* [x] Project scoping and system design
-* [x] Repository structure setup
-* [ ] Download and store raw dataset
-* [ ] Data schema inspection
-* [ ] Data cleaning and preprocessing
-* [ ] Handle missing and invalid ratings
-* [ ] Save processed datasets
-
 ---
 
 ### Phase 2: Exploratory Data Analysis
-
-* [ ] User activity distribution analysis
-* [ ] Book popularity distribution analysis
-* [ ] Dataset sparsity analysis
-* [ ] Rating distribution visualization
-* [ ] Cold-start scenario identification
-
 ---
 
 ### Phase 3: Feature Engineering
-
-* [ ] User–item rating matrix creation
-* [ ] Rating normalization
-* [ ] Sparse matrix optimization
-* [ ] Train–test split strategy
-
 ---
 
 ### Phase 4: Collaborative Filtering Models
-
-* [ ] User–User collaborative filtering
-* [ ] Item–Item collaborative filtering
-* [ ] Similarity metric comparison
-* [ ] Nearest-neighbor optimization
-* [ ] Rating prediction logic
-
 ---
 
 ### Phase 5: Evaluation Framework
-
-* [ ] RMSE and MAE calculation
-* [ ] Precision@K and Recall@K
-* [ ] Offline validation strategy
-* [ ] Error analysis and tuning
-
 ---
 
 ### Phase 6: Recommendation Engine
-
-* [ ] Top-N recommendation generation
-* [ ] User-specific inference
-* [ ] Handling unseen users and books
-* [ ] Recommendation explainability
-
 ---
 
 ### Phase 7: Productionization (Planned – Level 2)
-
-* [ ] Modular pipeline refactoring
-* [ ] Model versioning
-* [ ] FastAPI prediction service
-* [ ] Batch inference pipeline
-* [ ] Logging and monitoring
-* [ ] Dockerization
-
 ---
 
 ### Phase 8: Visualization & Dashboard (Optional)
-
-* [ ] Recommendation exploration dashboard
-* [ ] Similarity analysis visualizations
-* [ ] Popularity vs personalization insights
 
 ---
 
@@ -240,10 +187,15 @@ API / Dashboard (Phase 2)
 
 | Metric      | Purpose                            |
 | ----------- | ---------------------------------- |
-| RMSE        | Accuracy of rating predictions     |
-| MAE         | Robustness to outliers             |
 | Precision@K | Relevance of top-K recommendations |
 | Recall@K    | Coverage of relevant items         |
+
+Latest notebook results (Section 7: Evaluation, using uv-managed env):
+
+| Metric        | Value   | Notes                              |
+| ------------- | ------- | ---------------------------------- |
+| Precision@10  | 0.0403  | Item-based KNN, cosine similarity |
+| Recall@10     | 0.1151  | Item-based KNN, cosine similarity |
 
 ---
 
@@ -264,16 +216,25 @@ pip install -r requirements.txt
 
 ```
 .
-├── data/
-├── notebooks/
+├── Data/                      # Raw CSVs (books, users, ratings)
+├── artifacts/                 # Generated artifacts (cleaned CSVs, pivot, model, etc.)
+├── notebooks/                 # EDA, modelling, evaluation notebook
 ├── src/
-│   ├── ingestion/
-│   ├── preprocessing/
-│   ├── features/
-│   ├── models/
-│   ├── evaluation/
-│   └── inference/
+│   ├── components/            
+    ├──data_ingestion.py
+    ├──data_preprocessing.py
+    ├──model_preparation.py
+└── pipelines/             
+    ├──data_pipeline.py
+    ├──training_pipeline.py
+    ├──prediction_pipeline.py
+├── app.py                     # FastAPI service
+├── streamlit_app.py           # Streamlit UI
+├── Dockerfile                 # uv-based container image
+├── docker-compose.yml         # Orchestration for data/train/api/ui
+├── ARCHITECTURE.md            # System architecture and diagrams
 ├── README.md
+├── pyproject.toml             # uv/PEP 621 metadata + deps
 └── requirements.txt
 ```
 
